@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name = 'DOPDropDownMenu-Enhanced'
+  s.name = 'DOPDropDownMenu'
   s.version = '1.0.0'
   s.license = 'MIT'
   s.summary = 'DOPDropDownMenu-Enhanced'
@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
   s.watchos.deployment_target = '2.0'
 
-  s.source_files = 'DOPdemo/DOPDropDownMenu - Enhanced/*.*'
+  s.source_files = 'DOPdemo/DOPDropDownMenu/*.*'
 end
