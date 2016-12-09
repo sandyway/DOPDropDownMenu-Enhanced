@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name = 'DOPDropDownMenu'
   s.version = '1.0.0'
   s.license = 'MIT'
-  s.summary = 'DOPDropDownMenu-Enhanced'
+  s.summary = 'DOPDropDownMenu'
   s.homepage = 'https://github.com/sandyway/DOPDropDownMenu-Enhanced'
   s.social_media_url = 'https://github.com/sandyway/DOPDropDownMenu-Enhanced'
   s.authors = { 'swing' => 'sandyway@hotmail.com' }
