@@ -115,7 +115,7 @@
  *
  *  @return menu
  */
-- (instancetype)initWithOrigin:(CGPoint)origin andHeight:(CGFloat)height;
+- (instancetype)initWithOrigin:(CGRect)rect;
 
 // 获取title
 - (NSString *)titleForRowAtIndexPath:(DOPIndexPath *)indexPath;

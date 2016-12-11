@@ -292,9 +292,10 @@
 }
 
 #pragma mark - init method
-- (instancetype)initWithOrigin:(CGPoint)origin andHeight:(CGFloat)height {
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    self = [self initWithFrame:CGRectMake(origin.x, origin.y, screenSize.width, height)];
+- (instancetype)initWithOrigin:(CGRect)rect {
+//    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    CGPoint origin = rect.origin;
+    self = [self initWithFrame:rect];
     if (self) {
         _origin = origin;
         _currentSelectedMenudIndex = -1;
@@ -312,6 +313,7 @@
         
         //lefttableView init
         _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, 0) style:UITableViewStylePlain];
+        _leftTableView.layer.cornerRadius = 4;
         _leftTableView.rowHeight = kTableViewCellHeight;
         _leftTableView.dataSource = self;
         _leftTableView.delegate = self;
@@ -337,14 +339,15 @@
         [self addGestureRecognizer:tapGesture];
         
         //background init and tapped
-        _backGroundView = [[UIView alloc] initWithFrame:CGRectMake(origin.x, origin.y, screenSize.width, screenSize.height)];
+        const CGSize kScreenSize = [UIScreen mainScreen].bounds.size;
+        _backGroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
         _backGroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
         _backGroundView.opaque = NO;
         UIGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped:)];
         [_backGroundView addGestureRecognizer:gesture];
         
         //add bottom shadow
-        UIView *bottomShadow = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-0.5, screenSize.width, 0.5)];
+        UIView *bottomShadow = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-0.5, rect.size.width, 0.5)];
         bottomShadow.backgroundColor = kSeparatorColor;
         bottomShadow.hidden = YES;
         [self addSubview:bottomShadow];
@@ -537,14 +540,15 @@
         }
     }
     
+    const CGFloat kContentFromHeader = 1.0;
     if (show) {
         if (haveItems) {
-            _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, 0);
+            _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height + kContentFromHeader, self.frame.size.width/2, 0);
             _rightTableView.frame = CGRectMake(self.origin.x + self.frame.size.width/2, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, 0);
             [self.superview addSubview:_leftTableView];
             [self.superview addSubview:_rightTableView];
         } else {
-            _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
+            _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height + kContentFromHeader, self.frame.size.width, 0);
             _rightTableView.frame = CGRectMake(self.origin.x + self.frame.size.width/2, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, 0);
             [self.superview addSubview:_leftTableView];
             
@@ -557,22 +561,22 @@
         
         [UIView animateWithDuration:0.2 animations:^{
             if (haveItems) {
-                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, tableViewHeight);
+                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height + kContentFromHeader, self.frame.size.width/2, tableViewHeight);
                 
                 _rightTableView.frame = CGRectMake(self.origin.x + self.frame.size.width/2, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, tableViewHeight);
             } else {
-                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, tableViewHeight);
+                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height + kContentFromHeader, self.frame.size.width, tableViewHeight);
             }
             _buttomImageView.frame = CGRectMake(self.origin.x, CGRectGetMaxY(_leftTableView.frame)-2, self.frame.size.width, kButtomImageViewHeight);
         }];
     } else {
         [UIView animateWithDuration:0.2 animations:^{
             if (haveItems) {
-                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, 0);
+                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height + kContentFromHeader, self.frame.size.width/2, 0);
                 
                 _rightTableView.frame = CGRectMake(self.origin.x + self.frame.size.width/2, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, 0);
             } else {
-                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
+                _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height + kContentFromHeader, self.frame.size.width, 0);
             }
             _buttomImageView.frame = CGRectMake(self.origin.x, CGRectGetMaxY(_leftTableView.frame)-2, self.frame.size.width, kButtomImageViewHeight);
         } completion:^(BOOL finished) {
