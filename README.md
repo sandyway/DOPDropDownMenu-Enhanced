@@ -1,6 +1,7 @@
 # DOPDropDownMenu-Enhanced
 
 **New Update:**<br>
+方便swift中使用pod,增加了podspec
 support cell image 
 新增cell 图片 支持, 新增 detailText  
 
