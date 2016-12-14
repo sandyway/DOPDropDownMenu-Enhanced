@@ -515,7 +515,7 @@
 
 - (void)animateBackGroundView:(UIView *)view show:(BOOL)show complete:(void(^)())complete {
     if (show) {
-        [self.superview.superview addSubview:view];
+        [self.superview addSubview:view];
         [view.superview addSubview:self];
         [UIView animateWithDuration:0.2 animations:^{
             view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
