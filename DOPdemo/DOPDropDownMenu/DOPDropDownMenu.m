@@ -91,7 +91,6 @@
 @property (nonatomic, copy) NSArray *titles;
 @property (nonatomic, copy) NSArray *indicators;
 @property (nonatomic, copy) NSArray *bgLayers;
-
 @end
 
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -439,6 +438,13 @@
     if (_dataSource == nil) {
         return;
     }
+    
+    self.userInteractionEnabled = FALSE;
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, 0.75 * NSEC_PER_SEC);
+    dispatch_after(delayTime, dispatch_get_main_queue(), ^(void) {
+        self.userInteractionEnabled = TRUE;
+    });
+    
     CGPoint touchPoint = [paramSender locationInView:self];
     //calculate index
     NSInteger tapIndex = touchPoint.x / (self.frame.size.width / _numOfMenu);
@@ -509,7 +515,7 @@
 
 - (void)animateBackGroundView:(UIView *)view show:(BOOL)show complete:(void(^)())complete {
     if (show) {
-        [self.superview addSubview:view];
+        [self.superview.superview addSubview:view];
         [view.superview addSubview:self];
         [UIView animateWithDuration:0.2 animations:^{
             view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
