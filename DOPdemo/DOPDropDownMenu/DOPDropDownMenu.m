@@ -477,6 +477,12 @@
     }
 }
 
+- (void)hide {
+    if (_show) {
+        [self backgroundTapped: nil];
+    }
+}
+
 - (void)backgroundTapped:(UITapGestureRecognizer *)paramSender
 {
     [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_leftTableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
