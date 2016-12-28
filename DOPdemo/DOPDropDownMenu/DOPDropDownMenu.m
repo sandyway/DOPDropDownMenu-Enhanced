@@ -171,7 +171,7 @@
         return;
     }
     
-    if (_dataSourceFlags.numberOfRowsInColumn <= indexPath.column || [_dataSource menu:self numberOfRowsInColumn:indexPath.column] <= indexPath.row) {
+    if (_numOfMenu <= indexPath.column || [_dataSource menu:self numberOfRowsInColumn:indexPath.column] <= indexPath.row) {
         return;
     }
     
