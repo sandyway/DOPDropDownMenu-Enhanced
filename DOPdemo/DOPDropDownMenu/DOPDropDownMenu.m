@@ -272,7 +272,7 @@
         [self.layer addSublayer:title];
         [tempTitles addObject:title];
         //indicator
-        CGPoint indicatorPosition = CGPointMake(titlePosition.x + (title.bounds.size.width / 2.0) + 5, self.frame.size.height / 2);
+        CGPoint indicatorPosition = CGPointMake([self indicatorPosWithTextLayer: title], self.frame.size.height / 2);
         CAShapeLayer *indicator = [self createIndicatorWithColor:self.indicatorColor andPosition:indicatorPosition];
 //        CAShapeLayer *indicator = [self createIndicatorWithColor:self.indicatorColor andPosition:CGPointMake((i + 1)*separatorLineInterval - 10, self.frame.size.height / 2)];
         [self.layer addSublayer:indicator];
@@ -784,6 +784,13 @@
             
         }
     }
+    CATextLayer *curTitle = _titles[_currentSelectedMenudIndex];
+    CAShapeLayer *curIndicator = _indicators[_currentSelectedMenudIndex];
+    curIndicator.position = CGPointMake([self indicatorPosWithTextLayer: curTitle], curIndicator.position.y);
+}
+
+-(CGFloat)indicatorPosWithTextLayer:(CATextLayer*)textLayer {
+    return textLayer.position.x + (textLayer.bounds.size.width / 2.0) + 5;
 }
 
 - (BOOL )confiMenuWithSelectRow:(NSInteger)row {
